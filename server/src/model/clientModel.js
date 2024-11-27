@@ -28,13 +28,12 @@ const clientSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  id: { // Custom 'id' field to keep track of clients if needed
+  id: {
     type: Number,
     immutable: true,
   },
 });
 
-// Apply auto-increment plugin for custom 'id'
 clientSchema.plugin(AutoIncrement, { inc_field: "id", start_seq: 1 });
 
 const Client = mongoose.model("Client", clientSchema);

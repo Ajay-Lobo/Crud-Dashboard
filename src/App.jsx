@@ -10,10 +10,9 @@ function App() {
   const [modalMode, setModalMode] = useState("add");
   const [search, setSearch] = useState("");
   const [currentClient, setCurrentClient] = useState(null);
-  const [tableData, setTableData] = useState([]); // Manage table data here
-  const [error, setError] = useState(null); // Error state
+  const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(null);
 
-  // Fetch data once when the component mounts
   useEffect(() => {
     const fetchClients = async () => {
       try {
@@ -37,17 +36,23 @@ function App() {
   };
 
   const handleSubmit = async (clientData) => {
-    console.log("Submitting form:", clientData);
+    // console.log("Submitting form:", clientData);
     try {
       if (modalMode === "add") {
-        await axios.post("http://localhost:3000/api/clients", clientData);
+        const { _id, ...newClientData } = clientData;
+
+        await axios.post("http://localhost:3000/api/clients", newClientData);
         console.log("Client added");
-        // Refresh table data
-        setTableData((prevData) => [...prevData, clientData]);
+
+        const response = await axios.get("http://localhost:3000/api/clients");
+        setTableData(response.data.data);
       } else {
-        await axios.put(`http://localhost:3000/api/clients/${clientData._id}`, clientData);
+        await axios.put(
+          `http://localhost:3000/api/clients/${clientData._id}`,
+          clientData
+        );
         console.log("Client edited");
-        // Update the edited client in the table
+
         setTableData((prevData) =>
           prevData.map((client) =>
             client._id === clientData._id ? clientData : client
@@ -60,14 +65,17 @@ function App() {
   };
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this client?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this client?"
+    );
     if (!confirm) return;
 
     try {
       await axios.delete(`http://localhost:3000/api/clients/${id}`);
       console.log("Client deleted");
-      // Remove the deleted client from the table
-      setTableData((prevData) => prevData.filter((client) => client._id !== id));
+      setTableData((prevData) =>
+        prevData.filter((client) => client._id !== id)
+      );
     } catch (error) {
       console.error("Error deleting client:", error);
     }
@@ -80,8 +88,8 @@ function App() {
         handleOpen={handleOpen}
         searchTerm={search}
         handleDelete={handleDelete}
-        tableData={tableData} // Pass tableData to TableList
-        error={error} // Pass error to TableList
+        tableData={tableData}
+        error={error}
       />
       <ModalForm
         isOpen={isOpen}

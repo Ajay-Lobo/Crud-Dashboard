@@ -1,5 +1,10 @@
-const TableList = ({ handleOpen, searchTerm, handleDelete, tableData, error }) => {
-  // Filter clients based on the search term
+const TableList = ({
+  handleOpen,
+  searchTerm,
+  handleDelete,
+  tableData,
+  error,
+}) => {
   const filteredData = tableData.filter((client) => {
     return (
       client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
