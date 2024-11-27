@@ -1,6 +1,6 @@
-# MERN Stack Client Management App
+# MERN Stack Simple Client Management Dashboard
 
-This is a simple client management application built with the MERN stack (MongoDB, Express, React, Node.js) and styled with Tailwind CSS and DaisyUI components. The app allows users to add, edit, delete, and view client information, with a focus on user-friendly UI design.
+This is a simple client management dashboard built with the MERN stack (MongoDB, Express, React, Node.js) and styled with Tailwind CSS and DaisyUI components. The app allows users to add, edit, delete, and view client information, with a focus on user-friendly UI design.
 
 ## Features
 
